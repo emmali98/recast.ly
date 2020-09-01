@@ -11,6 +11,14 @@ class App extends React.Component {
     };
   }
 
+  newVideo(e) {
+    var title = e.target.innerHTML;
+    var newVid = this.state.currentVideoList.find(video => video.snippet.title === title);
+    this.setState({
+      currentVideo: newVid
+    });
+  }
+
   render() {
     return (
       <div>
@@ -23,7 +31,7 @@ class App extends React.Component {
           <div className="col-md-7">
             <VideoPlayer video={this.state.currentVideo}/>
           </div>
-          <div className="col-md-5">
+          <div className="col-md-5" onClick = {((e) => this.newVideo.call(this, e))}>
             <VideoList videos={this.state.currentVideoList}/>
           </div>
         </div>
