@@ -1,4 +1,4 @@
-var searchYouTube = (options = {maxResults: 5}, callback) => {
+var searchYouTube = (options, callback) => {
   // var results = YouTube.Search.list('id,snippet', {q: 'dogs', maxResults: 5, key: 'AIzaSyC7yBg_c-JzmcEEFO3twkvExxFFfa8ZxYg'});
   // console.log(results);
   // var results = YouTube.Search.list('id,snippet', options);
@@ -7,16 +7,15 @@ var searchYouTube = (options = {maxResults: 5}, callback) => {
     type: 'GET',
     url: 'https://www.googleapis.com/youtube/v3/search',
     data: {
-      key: 'AIzaSyC7yBg_c-JzmcEEFO3twkvExxFFfa8ZxYg',
-      q: 'dogs',
-      part: 'snippet',
-      maxResults: 5,
+      key: options.key,
+      q: options.query,
+      maxResults: options.max || 5,
       type: 'video',
-      videoEmbeddable: true,
+      part: 'snippet'
     },
     success: function(data) {
-      embedVideo(data);
-      callback(data);
+      console.log(data.items);
+      callback(data.items);
     },
     error: function(response) {
       console.log('Request Failed');
@@ -25,3 +24,10 @@ var searchYouTube = (options = {maxResults: 5}, callback) => {
 };
 
 export default searchYouTube;
+
+// key: 'AIzaSyC7yBg_c-JzmcEEFO3twkvExxFFfa8ZxYg',
+// q: 'dogs',
+// part: 'snippet',
+// maxResults: 5,
+// type: 'video',
+// videoEmbeddable: true,
