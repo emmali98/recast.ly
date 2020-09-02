@@ -25,6 +25,7 @@ class App extends React.Component {
   liveSearch(e) {
     console.log(e.target.value);
     _.debounce(function() {
+      console.log('testing123');
       searchYouTube({
         key: YOUTUBE_API_KEY,
         query: e.target.value},
