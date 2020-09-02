@@ -22,10 +22,23 @@ class App extends React.Component {
     });
   }
 
+  debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+      var context = this;
+      var args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function() {
+        timeout = null;
+        if (!immediate) { func.apply(context, args); }
+      }, wait);
+      if (immediate && !timeout) { func.apply(context, args); }
+    };
+  }
+
   liveSearch(e) {
     console.log(e.target.value);
-    _.debounce(function() {
-      console.log('testing123');
+    this.debounce(
       searchYouTube({
         key: YOUTUBE_API_KEY,
         query: e.target.value},
@@ -35,8 +48,7 @@ class App extends React.Component {
           currentVideo: videoArray[0],
           currentVideoList: videoArray
         });
-      });
-    }, 500);
+      }), 5000, false);
   }
 
   render() {
