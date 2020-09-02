@@ -22,12 +22,28 @@ class App extends React.Component {
     });
   }
 
+  liveSearch(e) {
+    console.log(e.target.value);
+    _.debounce(function() {
+      searchYouTube({
+        key: YOUTUBE_API_KEY,
+        query: e.target.value},
+      (videoArray) => {
+        console.log(videoArray);
+        this.setState({
+          currentVideo: videoArray[0],
+          currentVideoList: videoArray
+        });
+      });
+    }, 500);
+  }
+
   render() {
     return (
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search searchYouTube={searchYouTube}/>
+            <Search liveSearch={this.liveSearch.bind(this)}/>
           </div>
         </nav>
         <div className="row">

@@ -14,29 +14,28 @@ import YOUTUBE_API_KEY from '../../src/config/youtube.js';
 // In the ES6 spec, files are "modules" and do not share a top-level scope
 // `var` declarations will only exist globally where explicitly defined
 
-class Search extends App {
+class Search extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  liveSearch(e) {
-    _.debounce(searchYouTube({
-      key: YOUTUBE_API_KEY,
-      query: e.target.value},
-    (videoArray) => {
-      console.log(videoArray);
-      this.setState({
-        currentVideo: videoArray[0],
-        currentVideoList: videoArray
-      });
-    }), 1000);
-
-  }
+  // liveSearch(e) {
+  //   _.debounce(searchYouTube({
+  //     key: YOUTUBE_API_KEY,
+  //     query: e.target.value},
+  //   (videoArray) => {
+  //     console.log(videoArray);
+  //     this.setState({
+  //       currentVideo: videoArray[0],
+  //       currentVideoList: videoArray
+  //     });
+  //   }), 1000);
+  // }
 
   render() {
     return (
       <div className="search-bar form-inline">
-        <input className="form-control" type="text" onInput={((e) => this.liveSearch.call(App, e))}/>
+        <input className="form-control" type="text" onChange={((e) => this.props.liveSearch(e))}/>
         <button className="btn hidden-sm-down">
           <span className="glyphicon glyphicon-search"></span>
         </button>
